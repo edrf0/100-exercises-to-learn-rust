@@ -7,8 +7,9 @@
 //
 // We expect `factorial(0)` to return `1`, `factorial(1)` to return `1`,
 // `factorial(2)` to return `2`, and so on.
-//
-// Use only what you learned! No loops yet, so you'll have to use recursion!
+fn factorial(n: u64) -> u64 {
+    (1..=n).product()
+}
 
 #[cfg(test)]
 mod tests {

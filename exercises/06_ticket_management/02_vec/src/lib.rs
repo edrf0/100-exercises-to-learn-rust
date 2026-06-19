@@ -10,12 +10,28 @@
 //
 // We expect `fibonacci(0)` to return `0`, `fibonacci(1)` to return `1`,
 // `fibonacci(2)` to return `1`, and so on.
+
+use std::collections::VecDeque;
+
 pub fn fibonacci(n: u32) -> u32 {
     // TODO: implement the `fibonacci` function
     //
     // Hint: use a `Vec` to memoize the results you have already calculated
     // so that you don't have to recalculate them several times.
-    todo!()
+    if n == 0 {
+        return 0;
+    }
+    if n == 1 {
+        return 1;
+    }
+    let mut vector = VecDeque::with_capacity(3);
+    vector.push_back(0);
+    vector.push_back(1);
+    for _ in 2..=n {
+        vector.push_back(vector[1] + vector[0]);
+        vector.pop_front();
+    }
+    vector[1]
 }
 
 #[cfg(test)]

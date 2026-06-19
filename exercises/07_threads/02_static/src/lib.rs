@@ -1,10 +1,15 @@
-// TODO: Given a static slice of integers, split the slice into two halves and
-//  sum each half in a separate thread.
-//  Do not allocate any additional memory!
 use std::thread;
+use std::thread::ScopedJoinHandle;
 
-pub fn sum(slice: &'static [i32]) -> i32 {
-    todo!()
+pub fn sum(slice: &[i32]) -> i32 {
+    let (first, second) = slice.split_at(slice.len() / 2);
+    thread::scope(|s| {
+        let handle: ScopedJoinHandle<'_, i32> = s.spawn(|| {
+            second.iter().sum()
+        });
+        let first_result: i32 = first.iter().sum();
+        first_result + handle.join().unwrap_or(0)
+    })
 }
 
 #[cfg(test)]

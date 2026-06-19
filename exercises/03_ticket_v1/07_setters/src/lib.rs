@@ -11,26 +11,36 @@ pub struct Ticket {
 
 impl Ticket {
     pub fn new(title: String, description: String, status: String) -> Ticket {
+        Self::title_check(title.as_str());
+        Self::description_check(description.as_str());
+        Self::status_check(status.as_str());
+
+        Ticket {
+            title,
+            description,
+            status,
+        }
+    }
+
+    fn title_check(title: &str) {
         if title.is_empty() {
             panic!("Title cannot be empty");
         }
         if title.len() > 50 {
             panic!("Title cannot be longer than 50 bytes");
         }
+    }
+    fn description_check(description: &str) {
         if description.is_empty() {
             panic!("Description cannot be empty");
         }
         if description.len() > 500 {
             panic!("Description cannot be longer than 500 bytes");
         }
+    }
+    fn status_check(status: &str) {
         if status != "To-Do" && status != "In Progress" && status != "Done" {
             panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
-        }
-
-        Ticket {
-            title,
-            description,
-            status,
         }
     }
 
@@ -44,6 +54,19 @@ impl Ticket {
 
     pub fn status(&self) -> &String {
         &self.status
+    }
+
+    pub fn set_title(&mut self, title: String) {
+        Self::title_check(title.as_str());
+        self.title = title;
+    }
+    pub fn set_description(&mut self, description: String) {
+        Self::description_check(description.as_str());
+        self.description = description;
+    }
+    pub fn set_status(&mut self, status: String) {
+        Self::status_check(status.as_str());
+        self.status = status;
     }
 }
 
